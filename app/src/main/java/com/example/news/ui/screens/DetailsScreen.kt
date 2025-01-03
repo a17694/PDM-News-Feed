@@ -8,14 +8,7 @@ import org.json.JSONObject
 
 @Composable
 fun DetailsScreen(navController: NavController, articleJson: String?) {
-    println(articleJson)
-
-
     val articleObject = JSONObject(articleJson)
     val article = Article.fromJson(articleObject, articleObject.getString("source"))
-//    article?.let {
-//        ArticleDetailView(navController, article = it)
-//    }
-
     ArticleDetailView(article = article)
 }
