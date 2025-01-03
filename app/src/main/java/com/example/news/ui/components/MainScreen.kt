@@ -30,7 +30,9 @@ fun MainScreen() {
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val navController = rememberNavController()
     val coroutineScope = rememberCoroutineScope()
-    var isBookmarked by remember { mutableStateOf(false) }
+
+    // Mapeamento do estado de favoritos para as telas
+    val bookmarkedState = remember { mutableStateOf(false) }
 
     ModalNavigationDrawer(
         drawerContent = {
@@ -42,8 +44,8 @@ fun MainScreen() {
             topBar = {
                 AppTopBar(
                     title = "News App",
-                    isAdded = isBookmarked,
-                    onToggleAdded = { isBookmarked = it },
+                    isAdded = bookmarkedState.value,
+                    onToggleAdded = { bookmarkedState.value = it }, // Atualiza o estado do favorito
                     onHamburgerClick = {
                         coroutineScope.launch {
                             if (drawerState.isClosed) drawerState.open() else drawerState.close()
@@ -81,6 +83,7 @@ fun MainScreen() {
         }
     }
 }
+
 
 
 @Preview(showBackground = true)

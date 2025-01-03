@@ -12,6 +12,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
+import com.example.news.ui.navigation.Screen
 
 @Composable
 fun AppBottomBar(
@@ -20,8 +21,8 @@ fun AppBottomBar(
 ) {
     NavigationBar {
         NavigationBarItem(
-            selected = currentScreen == "Home",
-            onClick = { onNavigate("Home") },
+            selected = currentScreen == Screen.Home.route, // Verifica se a rota atual é "Home"
+            onClick = { onNavigate(Screen.Home.route) },   // Navega para "Home"
             icon = {
                 Icon(
                     imageVector = Icons.Default.Home,
@@ -31,8 +32,8 @@ fun AppBottomBar(
             label = { Text("Home") }
         )
         NavigationBarItem(
-            selected = currentScreen == "Bookmarks",
-            onClick = { onNavigate("Bookmarks") },
+            selected = currentScreen == Screen.Bookmarks.route, // Verifica se a rota atual é "Bookmarks"
+            onClick = { onNavigate(Screen.Bookmarks.route) },   // Navega para "Bookmarks"
             icon = {
                 Icon(
                     imageVector = Icons.Default.Favorite,
