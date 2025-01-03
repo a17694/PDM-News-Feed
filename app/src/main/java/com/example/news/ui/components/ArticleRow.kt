@@ -21,6 +21,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
 import com.example.news.models.Article
+import com.example.news.utils.toStringDate
 
 @Composable
 fun ArticleRow(
@@ -42,7 +43,7 @@ fun ArticleRow(
             // Imagem do artigo
             AsyncImage(
                 model = article.urlToImage,
-                contentDescription = article.title,
+                contentDescription = "Article Image",
                 modifier = Modifier
                     .size(100.dp)
                     .clip(MaterialTheme.shapes.medium)
@@ -50,24 +51,50 @@ fun ArticleRow(
 
             Spacer(modifier = Modifier.width(8.dp))
 
-            // Título e descrição
+            // Título, descrição, data e fonte
             Column(
                 verticalArrangement = Arrangement.SpaceBetween,
                 modifier = Modifier.fillMaxWidth()
             ) {
+                // Título
                 Text(
-                    text = article.title?:"",
+                    text = article.title ?: "No Title",
                     style = MaterialTheme.typography.titleMedium,
                     maxLines = 2,
                     overflow = TextOverflow.Ellipsis
                 )
+
                 Spacer(modifier = Modifier.height(4.dp))
+
+                // Descrição
                 Text(
-                    text = article.description?:"",
+                    text = article.description ?: "No Description",
                     style = MaterialTheme.typography.bodyMedium,
                     maxLines = 3,
                     overflow = TextOverflow.Ellipsis
                 )
+
+                Spacer(modifier = Modifier.height(8.dp))
+
+                // Rodapé: Fonte e Data
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    Text(
+                        text = article.source,
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.primary
+                    )
+
+                    val formattedDate = article.publishedAt?.toStringDate("dd MMM yyyy") ?: "No Date"
+
+                    Text(
+                        text = formattedDate,
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.6f)
+                    )
+                }
             }
         }
     }
