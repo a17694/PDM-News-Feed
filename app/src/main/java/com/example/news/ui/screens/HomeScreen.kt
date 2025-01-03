@@ -16,6 +16,8 @@ import com.example.news.ui.components.ArticleRow
 import com.example.news.ui.navigation.Screen
 import com.example.news.utils.toDate
 import com.example.news.utils.toMD5
+import java.text.SimpleDateFormat
+import java.util.Locale
 
 @Composable
 fun HomeScreen(navController: NavController) {
@@ -27,7 +29,7 @@ fun HomeScreen(navController: NavController) {
             description = "Jetpack Compose is a modern toolkit that simplifies UI development and boosts productivity for Android developers.",
             url = "https://www.techcrunch.com/jetpack-compose-revolution",
             urlToImage = "https://via.placeholder.com/300/09f/fff.png",
-            publishedAt = ("2023-12-01T10:15:30").toDate()
+            publishedAt = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.US).parse("2023-12-02T14:20:45")
         ),
         Article(
             id = ("https://www.theverge.com/material-you-android").toMD5(),
@@ -36,7 +38,7 @@ fun HomeScreen(navController: NavController) {
             description = "Explore how Material You lets you customize your Android experience with dynamic color and modern components.",
             url = "https://www.theverge.com/material-you-android",
             urlToImage = "https://via.placeholder.com/300/1e90ff/fff.png",
-            publishedAt = ("2023-12-02T14:20:45").toDate()
+            publishedAt = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.US).parse("2023-12-02T14:20:45")
         ),
         Article(
             id = ("https://www.androidauthority.com/top-compose-libraries").toMD5(),
@@ -45,7 +47,7 @@ fun HomeScreen(navController: NavController) {
             description = "A curated list of libraries that enhance productivity and unlock powerful features in Jetpack Compose.",
             url = "https://www.androidauthority.com/top-compose-libraries",
             urlToImage = "https://via.placeholder.com/300/008000/fff.png",
-            publishedAt = ("2023-12-03T18:10:00").toDate()
+            publishedAt = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.US).parse("2023-12-02T14:20:45")
         ),
         Article(
             id = ("https://www.engadget.com/compose-multiplatform").toMD5(),
@@ -54,7 +56,7 @@ fun HomeScreen(navController: NavController) {
             description = "Jetpack Compose is now multiplatform, enabling developers to target Android, Desktop, and Web from a single codebase.",
             url = "https://www.engadget.com/compose-multiplatform",
             urlToImage = "https://via.placeholder.com/300/ff6347/fff.png",
-            publishedAt = ("2023-12-04T09:00:00").toDate()
+            publishedAt = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.US).parse("2023-12-02T14:20:45")
         ),
         Article(
             id = ("https://www.9to5google.com/kotlin-compose-perfect-match").toMD5(),
@@ -63,7 +65,7 @@ fun HomeScreen(navController: NavController) {
             description = "Discover how Kotlin's concise syntax and Jetpack Compose's modern UI toolkit are redefining Android development.",
             url = "https://www.9to5google.com/kotlin-compose-perfect-match",
             urlToImage = "https://via.placeholder.com/300/ffc0cb/fff.png",
-            publishedAt = ("2023-12-05T12:45:00").toDate()
+            publishedAt = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.US).parse("2023-12-02T14:20:45")
         )
     )
 
@@ -75,8 +77,8 @@ fun HomeScreen(navController: NavController) {
         items(articles) { article ->
             ArticleRow(
                 article = article,
-                onClick = { id ->
-                    navController.navigate(Screen.Details.createRoute(id))
+                onClick = { articleJson ->
+                    navController.navigate(Screen.Details.createRoute(articleJson))
                 }
             )
         }

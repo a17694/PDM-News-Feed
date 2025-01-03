@@ -32,7 +32,10 @@ fun ArticleRow(
         modifier = Modifier
             .padding(8.dp)
             .fillMaxWidth()
-            .clickable { onClick(article.id) },
+            .clickable {
+                val articleJson = article.toJsonString()
+                onClick(articleJson)
+                       },
         elevation = CardDefaults.cardElevation(4.dp)
     ) {
         Row(

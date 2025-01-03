@@ -9,8 +9,8 @@ import org.json.JSONObject
 import java.util.Date
 
 data class Article(
-    @PrimaryKey
-    val id: String,
+
+    @PrimaryKey val id: String,
     val source: String,
     var title: String?,
     var description: String?,

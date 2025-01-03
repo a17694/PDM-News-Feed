@@ -3,6 +3,8 @@ package com.example.news.ui.components
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material.icons.filled.Menu
@@ -30,7 +32,8 @@ fun AppTopBar(
     title: String,
     isAdded: Boolean,
     onToggleAdded: (Boolean) -> Unit,
-    onHamburgerClick: () -> Unit
+    onHamburgerClick: () -> Unit,
+    isBackButton: Boolean = false
 ) {
     TopAppBar(
         title = {
@@ -48,8 +51,8 @@ fun AppTopBar(
         navigationIcon = {
             IconButton(onClick = onHamburgerClick) {
                 Icon(
-                    imageVector = Icons.Default.Menu,
-                    contentDescription = "Menu"
+                    imageVector = if (isBackButton) Icons.AutoMirrored.Filled.ArrowBack else Icons.Default.Menu,
+                    contentDescription = if (isBackButton) "Back" else "Menu"
                 )
             }
         },
@@ -77,6 +80,7 @@ fun AppTopBarPreview() {
         onToggleAdded = { newValue -> isAdded = newValue },
         onHamburgerClick = {
             println("Menu 1 clicked")
-        }
+        },
+        isBackButton = true
     )
 }
