@@ -14,15 +14,22 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.currentBackStackEntryAsState
+import androidx.navigation.compose.rememberNavController
+import com.example.news.ui.navigation.Screen
+import com.example.news.ui.screens.BookmarkScreen
+import com.example.news.ui.screens.DetailsScreen
+import com.example.news.ui.screens.HomeScreen
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MainScreen() {
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
+    val navController = rememberNavController()
     val coroutineScope = rememberCoroutineScope()
-
-    var currentScreen by remember { mutableStateOf("Home") }
     var isBookmarked by remember { mutableStateOf(false) }
 
     ModalNavigationDrawer(
@@ -46,15 +53,31 @@ fun MainScreen() {
             },
             bottomBar = {
                 AppBottomBar(
-                    currentScreen = currentScreen,
-                    onNavigate = { screen -> currentScreen = screen }
+                    currentScreen = navController.currentBackStackEntryAsState().value?.destination?.route ?: Screen.Home.route,
+                    onNavigate = { route ->
+                        if (route != navController.currentBackStackEntry?.destination?.route) {
+                            navController.navigate(route)
+                        }
+                    }
                 )
             }
         ) { innerPadding ->
-            MainContent(
-                currentScreen = currentScreen,
+            NavHost(
+                navController = navController,
+                startDestination = Screen.Home.route,
                 modifier = Modifier.padding(innerPadding)
-            )
+            ) {
+                composable(Screen.Home.route) {
+                    HomeScreen(navController)
+                }
+                composable(Screen.Bookmarks.route) {
+                    BookmarkScreen(navController)
+                }
+                composable(Screen.Details.route) { backStackEntry ->
+                    val id = backStackEntry.arguments?.getString("id")
+                    DetailsScreen(navController, id)
+                }
+            }
         }
     }
 }
