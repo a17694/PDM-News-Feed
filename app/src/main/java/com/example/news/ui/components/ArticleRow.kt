@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.FavoriteBorder
@@ -28,6 +29,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
+import com.example.news.R
 import com.example.news.models.Article
 import com.example.news.utils.encodeURL
 import com.example.news.utils.toStringDate
@@ -59,11 +61,11 @@ fun ArticleRow(
         ) {
             // Imagem do artigo
             AsyncImage(
-                model = article.urlToImage,
+                model = article.urlToImage ?: R.drawable.baseline_photo_camera_back_24,
                 contentDescription = "Article Image",
                 modifier = Modifier
-                    .size(100.dp)
-                    .clip(MaterialTheme.shapes.medium)
+                    .size(50.dp)
+                    .clip(RoundedCornerShape(8.dp))
             )
 
             Spacer(modifier = Modifier.width(8.dp))
@@ -78,20 +80,23 @@ fun ArticleRow(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
+
+//                    IconButton(onClick = { onBookmarkToggle(article) }) {
+//                        Icon(
+//                            imageVector = if (isBookmarked) Icons.Default.Favorite else Icons.Default.FavoriteBorder,
+//                            contentDescription = "Toggle Bookmark",
+//                            tint = if (isBookmarked) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onBackground
+//                        )
+//                    }
+
                     Text(
                         text = article.title ?: "No Title",
                         style = MaterialTheme.typography.titleMedium,
-                        maxLines = 2,
+                        maxLines = 1,
                         overflow = TextOverflow.Ellipsis
                     )
 
-                    IconButton(onClick = { onBookmarkToggle(article) }) {
-                        Icon(
-                            imageVector = if (isBookmarked) Icons.Default.Favorite else Icons.Default.FavoriteBorder,
-                            contentDescription = "Toggle Bookmark",
-                            tint = if (isBookmarked) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onBackground
-                        )
-                    }
+
                 }
 
                 Spacer(modifier = Modifier.height(4.dp))

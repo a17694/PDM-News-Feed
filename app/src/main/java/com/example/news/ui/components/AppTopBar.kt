@@ -54,14 +54,16 @@ fun AppTopBar(
             }
         },
         actions = {
-            IconButton(
-                onClick = { onToggleAdded(!isAdded) }
-            ) {
-                Icon(
-                    imageVector = if (isAdded) Icons.Default.Favorite else Icons.Default.FavoriteBorder,
-                    contentDescription = if (isAdded) "Remove from Bookmark" else "Add to Bookmark",
-                    tint = if (isAdded) Color.Red else Color.Gray
-                )
+            if (isBackButton) {
+                IconButton(
+                    onClick = { onToggleAdded(!isAdded) }
+                ) {
+                    Icon(
+                        imageVector = if (isAdded) Icons.Default.Favorite else Icons.Default.FavoriteBorder,
+                        contentDescription = if (isAdded) "Remove from Bookmark" else "Add to Bookmark",
+                        tint = if (isAdded) Color.Red else Color.Gray
+                    )
+                }
             }
         }
     )

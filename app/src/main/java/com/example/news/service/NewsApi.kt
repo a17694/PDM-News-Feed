@@ -41,8 +41,9 @@ object NewsApi {
             for (index in 0 until articlesArray.length()) {
                 val articleObject = articlesArray.getJSONObject(index)
                 val article = Article.fromJson(articleObject, "NewsAPI")
-                if(article.title =="[Removed]")
+                if(article.title =="[Removed]" || article.description == "null" || article.description.isNullOrEmpty())
                     continue
+
                 articlesResult.add(article)
             }
 
