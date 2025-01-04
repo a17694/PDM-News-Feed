@@ -46,7 +46,8 @@ fun MainScreen() {
     ModalNavigationDrawer(
         drawerContent = {
             SideMenu(
-                navController = navController
+                navController = navController,
+                drawerState = drawerState
             )
         },
         drawerState = drawerState
