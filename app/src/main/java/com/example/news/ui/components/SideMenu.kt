@@ -27,6 +27,9 @@ fun SideMenu(
     val categories = listOf(
         "sports" to "Sports",
         "technology" to "Technology",
+        "entertainment" to "Entertainment",
+        "health" to "Health",
+        "science" to "Science",
         "observador" to "Observador"
     )
 
