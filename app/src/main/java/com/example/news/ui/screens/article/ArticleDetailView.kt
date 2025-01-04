@@ -1,15 +1,16 @@
-package com.example.news.ui.screens
+package com.example.news.ui.screens.article
 
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.viewinterop.AndroidView
-import androidx.navigation.NavController
-import com.example.news.models.Article
-
 
 @Composable
-fun ArticleDetailView(article: Article) {
+fun ArticleDetailView(viewModel: ArticleDetailViewModel) {
+    val url by viewModel.articleUrl.collectAsState()
+
     AndroidView(factory = { context ->
         WebView(context).apply {
             settings.javaScriptEnabled = true
@@ -18,9 +19,7 @@ fun ArticleDetailView(article: Article) {
             settings.useWideViewPort = true
             settings.setSupportZoom(true)
         }
-    },
-        update = { webView ->
-            webView.loadUrl(article.url ?: "")
-        })
+    }, update = { webView ->
+        webView.loadUrl(url)
+    })
 }
-

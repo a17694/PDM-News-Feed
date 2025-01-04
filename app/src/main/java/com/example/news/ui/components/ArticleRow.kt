@@ -1,5 +1,6 @@
 package com.example.news.ui.components
 
+
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -10,11 +11,18 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.style.TextOverflow
@@ -22,12 +30,17 @@ import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
 import com.example.news.models.Article
 import com.example.news.utils.toStringDate
+import kotlinx.coroutines.flow.StateFlow
 
 @Composable
 fun ArticleRow(
     article: Article,
-    onClick: (String) -> Unit
+    isBookmarkedFlow: StateFlow<Boolean>,
+    onClick: (String) -> Unit,
+    onBookmarkToggle: (Article) -> Unit // Callback para alternar favoritos
 ) {
+    val isBookmarked by isBookmarkedFlow.collectAsState()
+
     Card(
         modifier = Modifier
             .padding(8.dp)
@@ -35,7 +48,7 @@ fun ArticleRow(
             .clickable {
                 val articleJson = article.toJsonString()
                 onClick(articleJson)
-                       },
+            },
         elevation = CardDefaults.cardElevation(4.dp)
     ) {
         Row(
@@ -59,13 +72,26 @@ fun ArticleRow(
                 verticalArrangement = Arrangement.SpaceBetween,
                 modifier = Modifier.fillMaxWidth()
             ) {
-                // Título
-                Text(
-                    text = article.title ?: "No Title",
-                    style = MaterialTheme.typography.titleMedium,
-                    maxLines = 2,
-                    overflow = TextOverflow.Ellipsis
-                )
+                // Linha de Título e Ícone de Bookmark
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    Text(
+                        text = article.title ?: "No Title",
+                        style = MaterialTheme.typography.titleMedium,
+                        maxLines = 2,
+                        overflow = TextOverflow.Ellipsis
+                    )
+
+                    IconButton(onClick = { onBookmarkToggle(article) }) {
+                        Icon(
+                            imageVector = if (isBookmarked) Icons.Default.Favorite else Icons.Default.FavoriteBorder,
+                            contentDescription = "Toggle Bookmark",
+                            tint = if (isBookmarked) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onBackground
+                        )
+                    }
+                }
 
                 Spacer(modifier = Modifier.height(4.dp))
 

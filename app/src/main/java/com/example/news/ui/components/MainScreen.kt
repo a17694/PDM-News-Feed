@@ -7,27 +7,21 @@ import androidx.compose.material3.ModalNavigationDrawer
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import com.example.news.models.Article
 import com.example.news.ui.navigation.Screen
-import com.example.news.ui.screens.BookmarkScreen
-import com.example.news.ui.screens.ArticleDetailView
-import com.example.news.ui.screens.DetailsScreen
-import com.example.news.ui.screens.HomeScreen
+import com.example.news.ui.screens.bookmark.BookmarkView
+import com.example.news.ui.screens.details.DetailsView
+import com.example.news.ui.screens.home.HomeView
 import kotlinx.coroutines.launch
-import org.json.JSONObject
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -84,17 +78,20 @@ fun MainScreen() {
                 modifier = Modifier.padding(innerPadding)
             ) {
                 composable(Screen.Home.route) {
-                    HomeScreen(navController)
+                    HomeView(
+                        path = "top-headlines?country=us",//&category=sports
+                        navController = navController
+                    )
                 }
                 composable(Screen.Bookmarks.route) {
-                    BookmarkScreen(navController)
+                    BookmarkView(navController)
                 }
                 composable(
                     route = Screen.Details.route,
                     arguments = listOf(navArgument("articleJson") { type = NavType.StringType })
                 ) { backStackEntry ->
                     val jsonArticle = backStackEntry.arguments?.getString("articleJson")
-                    DetailsScreen(navController, jsonArticle)
+                    DetailsView(navController, jsonArticle)
                 }
             }
         }
@@ -102,8 +99,8 @@ fun MainScreen() {
 }
 
 
-@Preview(showBackground = true)
-@Composable
-fun MainScreenPreview() {
-    MainScreen()
-}
+//@Preview(showBackground = true)
+//@Composable
+//fun MainScreenPreview() {
+//    MainScreen()
+//}
