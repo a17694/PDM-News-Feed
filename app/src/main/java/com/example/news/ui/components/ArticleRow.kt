@@ -29,6 +29,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
 import com.example.news.models.Article
+import com.example.news.utils.encodeURL
 import com.example.news.utils.toStringDate
 import kotlinx.coroutines.flow.StateFlow
 

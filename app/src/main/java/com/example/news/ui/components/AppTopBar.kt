@@ -30,7 +30,7 @@ import androidx.compose.ui.tooling.preview.Preview
 @Composable
 fun AppTopBar(
     title: String,
-    isAdded: Boolean,
+    isAdded: Boolean = false,
     onToggleAdded: (Boolean) -> Unit,
     onHamburgerClick: () -> Unit,
     isBackButton: Boolean = false

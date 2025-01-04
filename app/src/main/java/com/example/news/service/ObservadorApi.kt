@@ -30,7 +30,7 @@ object ObservadorApi{
 
         val resultRequest = client.newCall(request).await()
 
-        println("${resultRequest.code}: ${resultRequest.message}")
+        //println("${resultRequest.code}: ${resultRequest.message}")
 
         if (!resultRequest.isSuccessful) throw IOException("Unexpected code ${resultRequest.networkResponse}")
 
@@ -41,17 +41,8 @@ object ObservadorApi{
 
         for (index in 0 until articlesArray.length()) {
             val articleObject = articlesArray.getJSONObject(index)
-            articlesResult.add(
-                Article(
-                    id = articleObject.getString("url").toMD5(),
-                    source = "Observador",
-                    title = articleObject.getString("title"),
-                    description = articleObject.optString("lead"),
-                    url = articleObject.getString("url"),
-                    urlToImage = articleObject.optString("image"),
-                    publishedAt = articleObject.optString("publish_date").toDate(),
-                )
-            )
+            val article = Article.fromJsonObservador(articleObject, "Observador")
+            articlesResult.add(article)
         }
         return articlesResult
 

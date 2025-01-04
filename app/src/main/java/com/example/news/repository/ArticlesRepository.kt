@@ -29,7 +29,10 @@ class ArticlesRepository @Inject constructor(
             try {
                 val newsApiArticles = newsApi.fetchArticles(path)
                 val observadorArticles = observadorApi.fetchArticles()
-                val allArticles = newsApiArticles + observadorArticles
+                var allArticles = newsApiArticles + observadorArticles
+                if(path == "observador"){
+                    allArticles = observadorArticles;
+                }
                 emit(ResultWrapper.Success(allArticles))
             } catch (e: IOException) {
                 emit(ResultWrapper.Error(e.localizedMessage ?: "Erro desconhecido"))

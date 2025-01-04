@@ -9,7 +9,6 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -22,25 +21,26 @@ import androidx.navigation.NavController
 import com.example.news.models.ResultWrapper
 import com.example.news.ui.components.ArticleRow
 import com.example.news.ui.navigation.Screen
+import com.example.news.utils.encodeURL
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeView(
     navController: NavController,
+    category: String? = null,
     path: String
 ) {
     val viewModel : HomeViewModel = hiltViewModel()
     val articlesState by viewModel.articles.collectAsStateWithLifecycle()
+    val fullPath = if (category != null) "$path&category=$category" else path
 
     // Fetch articles on first load
     LaunchedEffect(Unit) {
-        viewModel.fetchArticles(path)
+        viewModel.fetchArticles(fullPath)
     }
 
     Scaffold(
-        topBar = {
-            TopAppBar(title = { Text("Home") })
-        }
+
     ) { innerPadding ->
         when (val result = articlesState) {
             is ResultWrapper.Loading -> {
@@ -77,7 +77,7 @@ fun HomeView(
                                 article = article,
                                 isBookmarkedFlow = viewModel.isBookmarked(article),
                                 onClick = { articleJson ->
-                                    navController.navigate(Screen.Details.createRoute(articleJson))
+                                    navController.navigate(Screen.Details.createRoute(articleJson.encodeURL()))
                                 },
                                 onBookmarkToggle = { viewModel.toggleBookmark(article) }
                             )

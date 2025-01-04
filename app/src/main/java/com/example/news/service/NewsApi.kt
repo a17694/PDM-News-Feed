@@ -42,7 +42,6 @@ object NewsApi {
                 val articleObject = articlesArray.getJSONObject(index)
                 val article = Article.fromJson(articleObject, "NewsAPI")
                 articlesResult.add(article)
-                println(article.urlToImage)
             }
 
         }
