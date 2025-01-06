@@ -37,7 +37,7 @@ fun MainScreen() {
     val navController = rememberNavController()
     val coroutineScope = rememberCoroutineScope()
     // Mapeamento do estado de favoritos para as telas
-    val bookmarkedState = remember { mutableStateOf(false) }
+    var bookmarkedState = remember { mutableStateOf(false) }
     var topBarTitle by remember { mutableStateOf("Notícias") }
 
     // Observe a rota atual

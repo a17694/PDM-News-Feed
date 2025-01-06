@@ -22,6 +22,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
+import com.example.news.models.Article
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -30,7 +31,8 @@ fun AppTopBar(
     isAdded: Boolean = false,
     onToggleAdded: (Boolean) -> Unit,
     onHamburgerClick: () -> Unit,
-    isBackButton: Boolean = false
+    isBackButton: Boolean = false,
+    article: Article? = null
 ) {
     TopAppBar(
         title = {
@@ -54,9 +56,10 @@ fun AppTopBar(
             }
         },
         actions = {
-            if (isBackButton) {
+
+            if (isBackButton && article != null) {
                 IconButton(
-                    onClick = { onToggleAdded(!isAdded) }
+                    onClick = { onToggleAdded(!isAdded) } // Chama a ação ao clicar
                 ) {
                     Icon(
                         imageVector = if (isAdded) Icons.Default.Favorite else Icons.Default.FavoriteBorder,

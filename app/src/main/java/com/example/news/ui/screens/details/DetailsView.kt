@@ -7,7 +7,6 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.news.ui.screens.article.ArticleDetailView
 import com.example.news.ui.screens.article.ArticleDetailViewModel
-import com.example.news.utils.decodeURL
 
 @Composable
 fun DetailsView(navController: NavController, articleJson: String?) {
